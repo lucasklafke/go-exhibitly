@@ -1,0 +1,89 @@
+basePath: /api
+definitions:
+  models.Product:
+    properties:
+      author:
+        $ref: '#/definitions/models.User'
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: suporte@exhibitly.com
+    name: Suporte Exhibitly
+    url: http://exhibitly.com/support
+  description: API de classificados online para o projeto Exhibitly.
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://exhibitly.com/terms/
+  title: Exhibitly API
+  version: "1.0"
+paths:
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Obtém uma lista de produtos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: Lista todos os produtos
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo produto com base nos dados fornecidos
+      parameters:
+      - description: Detalhes do Produto
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Criação de produto
+      tags:
+      - Products
+swagger: "2.0"
