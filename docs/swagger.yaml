@@ -1,9 +1,38 @@
 basePath: /api
 definitions:
-  models.Product:
+  dto.CreateProductDto:
     properties:
-      author:
-        $ref: '#/definitions/models.User'
+      category:
+        example: Electronics
+        type: string
+      city:
+        example: São Paulo
+        type: string
+      description:
+        example: A great smartphone
+        type: string
+      image:
+        example: smartphone.jpg
+        type: string
+      postal_code:
+        example: 12345-678
+        type: string
+      price:
+        example: 999.99
+        type: number
+      state:
+        example: SP
+        type: string
+      title:
+        example: Smartphone
+        type: string
+    required:
+    - category
+    - price
+    - title
+    type: object
+  models.Category:
+    properties:
       created_at:
         type: string
       deleted_at:
@@ -14,22 +43,32 @@ definitions:
         type: integer
       image:
         type: string
-      price:
-        type: number
-      title:
+      name:
         type: string
       updated_at:
         type: string
     type: object
-  models.User:
+  models.Product:
     properties:
+      category:
+        $ref: '#/definitions/models.Category'
+      category_id:
+        type: string
       created_at:
         type: string
       deleted_at:
         type: string
+      description:
+        type: string
       id:
-        type: integer
-      name:
+        type: string
+      image:
+        type: string
+      price:
+        type: number
+      slug:
+        type: string
+      title:
         type: string
       updated_at:
         type: string
@@ -49,22 +88,6 @@ info:
   version: "1.0"
 paths:
   /products:
-    get:
-      consumes:
-      - application/json
-      description: Obtém uma lista de produtos
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.Product'
-            type: array
-      summary: Lista todos os produtos
-      tags:
-      - Products
     post:
       consumes:
       - application/json
@@ -75,7 +98,7 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/models.Product'
+          $ref: '#/definitions/dto.CreateProductDto'
       produces:
       - application/json
       responses:

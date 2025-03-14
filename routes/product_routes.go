@@ -15,10 +15,11 @@ func SetupProductRoutes(router *gin.RouterGroup) {
 	productRepository := repositories.NewProductRepository(config.DB)
 	productService := services.NewProductService(productRepository)
 	productController := controllers.NewProductController(productService)
+
 	{
-		// @Router /
-		productRoutes.GET("/", productController.GetProducts)
-		productRoutes.POST("/", productController.CreateProduct)
-		productRoutes.GET("/:id", productController.GetProduct)
+		// @Router
+		productRoutes.GET("/", productController.GetProducts)    // get products
+		productRoutes.POST("/", productController.CreateProduct) // create product
+		productRoutes.GET("/:id", productController.GetProduct)  // get product
 	}
 }

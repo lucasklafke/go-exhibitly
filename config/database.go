@@ -35,7 +35,7 @@ func ConnectToDatabase() {
 	log.Println("Banco de dados conectado com sucesso!")
 
 	// Realiza a migração dos modelos, apenas após a conexão ser estabelecida
-	err = DB.AutoMigrate(&models.Product{}) // Adicione outros modelos conforme necessário
+	err = DB.AutoMigrate(&models.Product{}, &models.User{}, &models.Session{}, &models.Category{}, &models.Stock{}) // Adicione outros modelos conforme necessário
 	if err != nil {
 		log.Fatalf("Falha ao migrar os modelos: %v", err)
 	}

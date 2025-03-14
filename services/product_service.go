@@ -4,6 +4,7 @@ import (
 	"exhibitly/dto"
 	"exhibitly/models"
 	"exhibitly/repositories"
+	"exhibitly/utils"
 )
 
 // ProductService é a interface para o serviço de produto
@@ -25,15 +26,21 @@ func NewProductService(repo repositories.ProductRepository) ProductService {
 
 // CreateProduct cria um novo produto no banco de dados
 func (s *productService) CreateProduct(productDTO dto.CreateProductDto) (*models.Product, error) {
+	id, err := utils.GenerateULID()
+
+	if err != nil {
+		return nil, err
+	}
+
 	product := models.Product{
+		ID:          id,
 		Title:       productDTO.Title,
 		Price:       productDTO.Price,
 		Description: productDTO.Description,
 		Image:       productDTO.Image,
-		// Preencha com outros campos conforme necessário
 	}
 
-	// Inserir o produto no banco de dados
+	// insert product into database
 	if err := s.Repository.Create(&product); err != nil {
 		return nil, err
 	}

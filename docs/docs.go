@@ -25,30 +25,6 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/products": {
-            "get": {
-                "description": "Obtém uma lista de produtos",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Lista todos os produtos",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.Product"
-                            }
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "Cria um novo produto com base nos dados fornecidos",
                 "consumes": [
@@ -68,7 +44,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Product"
+                            "$ref": "#/definitions/dto.CreateProductDto"
                         }
                     }
                 ],
@@ -84,12 +60,51 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.Product": {
+        "dto.CreateProductDto": {
+            "type": "object",
+            "required": [
+                "category",
+                "price",
+                "title"
+            ],
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "example": "Electronics"
+                },
+                "city": {
+                    "type": "string",
+                    "example": "São Paulo"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "A great smartphone"
+                },
+                "image": {
+                    "type": "string",
+                    "example": "smartphone.jpg"
+                },
+                "postal_code": {
+                    "type": "string",
+                    "example": "12345-678"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 999.99
+                },
+                "state": {
+                    "type": "string",
+                    "example": "SP"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Smartphone"
+                }
+            }
+        },
+        "models.Category": {
             "type": "object",
             "properties": {
-                "author": {
-                    "$ref": "#/definitions/models.User"
-                },
                 "created_at": {
                     "type": "string"
                 },
@@ -105,10 +120,7 @@ const docTemplate = `{
                 "image": {
                     "type": "string"
                 },
-                "price": {
-                    "type": "number"
-                },
-                "title": {
+                "name": {
                     "type": "string"
                 },
                 "updated_at": {
@@ -116,19 +128,37 @@ const docTemplate = `{
                 }
             }
         },
-        "models.User": {
+        "models.Product": {
             "type": "object",
             "properties": {
+                "category": {
+                    "$ref": "#/definitions/models.Category"
+                },
+                "category_id": {
+                    "type": "string"
+                },
                 "created_at": {
                     "type": "string"
                 },
                 "deleted_at": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "description": {
+                    "type": "string"
                 },
-                "name": {
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 },
                 "updated_at": {

@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"exhibitly/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -23,6 +24,7 @@ func NewProductRepository(db *gorm.DB) ProductRepository {
 
 // Create insere um produto no banco de dados
 func (r *productRepository) Create(product *models.Product) error {
+	fmt.Print(*product)
 	return r.DB.Create(product).Error
 }
 

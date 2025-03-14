@@ -4,11 +4,15 @@ import (
 	"exhibitly/config"
 	"exhibitly/routes"
 	"log"
+	"os"
 
 	_ "exhibitly/docs"
+	"exhibitly/ent"
+
+	_ "github.com/lib/pq"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"                 // Import necessário para a documentação gerada
+	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
@@ -34,6 +38,8 @@ func main() {
 	}
 
 	config.ConnectToDatabase()
+
+	client, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
 
 	router := gin.Default()
 	routes.SetupRoutes(router)
